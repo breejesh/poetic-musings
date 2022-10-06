@@ -1,0 +1,15 @@
+.poem-text {
+  font-size: 1.3rem;
+}
+
+.poem-container-wrapper {
+  height: 100%;
+  background-color: var(--white);
+}
+
+.poem-container {
+  padding-bottom: var(--poem-player-height);
+  padding-left: 100px;
+  padding-right: 100px;
+  padding-top: 50px;
+}

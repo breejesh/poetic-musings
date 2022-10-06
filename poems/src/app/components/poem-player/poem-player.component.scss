@@ -1,0 +1,105 @@
+.poem-player {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--white);
+  height: var(--poem-player-height);
+  width: 100%;
+  background: var(--black);
+}
+
+.poem-player .left-section {
+  padding-left: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.poem-player .center-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.poem-player .right-section {
+  padding-right: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+  align-items: center;
+}
+
+.author-img-placeholder {
+  width: 160px;
+}
+
+.author-img {
+  position: absolute;
+  bottom: 0;
+  border: 10px solid var(--black);
+  object-fit: cover;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
+}
+
+.title {
+  font-size: 1.2rem;
+}
+
+.author {
+  line-height: 0.8rem;
+  font-size: 1rem;
+}
+
+.published {
+  font-style: italic;
+  margin-right: 1rem;
+  opacity: 0.8;
+}
+
+.meta {
+  margin-left: 2rem;
+  font-size: 0.8rem;
+  line-height: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.control {
+  font-size: 1.4rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.control > i,
+.control > span {
+  margin-right: 1rem;
+}
+
+.control .invert {
+  color: var(--black);
+}
+
+.heart-hover:hover > .fa-regular.fa-heart {
+  font-size: 10rem;
+  display: none;
+}
+
+.heart-hover > .fa-solid.fa-heart.on-hover {
+  display: none;
+}
+
+.heart-hover:hover > .fa-solid.fa-heart.on-hover {
+  transition: ease-in;
+  display: inherit;
+}

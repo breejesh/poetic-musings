@@ -1,0 +1,67 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('app/styles/colors.scss');
+@import url('app/styles/sizes.scss');
+@import url('app/styles/popper.scss');
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--black);
+  font-family: 'Abyssinica SIL', serif;
+}
+
+.spacer {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.number-font {
+  font-family: Georgia, serif;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.poem-title {
+  font-family: 'Arima Madurai', cursive;
+  font-size: 2rem;
+
+}
+
+.poem-author {
+  opacity: 0.8;
+  font-size: 1.4rem;
+}
+
+.text-red {
+  color: var(--red);
+}
+
+.text-green {
+  color: var(--green);
+}
+
+.text-blue {
+  color: var(--blue);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--dark-grey-2);
+  border-radius: 60px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--dark-grey);
+}

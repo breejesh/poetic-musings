@@ -1,0 +1,26 @@
+poem
+- url // primary-key
+- title
+- html_body
+- publish_date
+- author url
+- views
+- time
+- website_category
+
+// need to get html page and then extract image url from there
+poet
+ - url // primary-key
+ - name
+ - image_file
+
+// for now local storage
+user_favourites
+ - url[]
+
+
+// classic, contemporary, community
+website_category
+- id
+- name
+

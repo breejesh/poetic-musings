@@ -1,0 +1,52 @@
+<div class="poem-player">
+
+  <div class="left-section">
+    <div class="author-img-placeholder">
+      <img class="author-img" src="https://www.thoughtco.com/thmb/r5-uE4EGSSgP2qN5WPSBNlJiCzM=/3000x2042/filters:no_upscale():max_bytes(150000):strip_icc()/Walt-Whitman-1863-3000-3x2gty-59df7833519de20011c36d93.jpg" alt="Avatar">
+    </div>
+    <div>
+      <div class="poem-title title">
+        O Captain! My Captain!
+      </div>
+      <div class="poem-author author">
+        Walt Whitman
+      </div>
+    </div>
+  </div>
+  <div class="center-section">
+
+    <div class="control">
+      <i class="fa-solid fa-share-nodes text-blue smaller cursor-pointer" [popper]="'Share'"></i>
+
+      <i class="fa-solid fa-backward cursor-pointer" [popper]="'Previous Poem'"></i>
+
+      <span class="fa-stack cursor-pointer" [popper]="'Randomize'">
+        <i class="fa-solid fa-circle fa-stack-2x"></i>
+        <i class="fa-solid fa-shuffle fa-stack-1x invert"></i>
+      </span>
+
+      <i class="fa-solid fa-forward cursor-pointer" [popper]="'Next Poem'"></i>
+
+      <span class="heart-hover" [popper]="'Add to Favourites'">
+        <i class="fa-regular fa-heart text-red smaller cursor-pointer"></i>
+        <i class="fa-solid fa-heart on-hover text-red smaller cursor-pointer"></i>
+      </span>
+
+    </div>
+  </div>
+  <div class="right-section">
+    <div class="published number-font">
+      Published in 1985
+    </div>
+    <div class="meta number-font">
+      <div>
+        <i class="fa-regular fa-eye"></i>&nbsp;&nbsp;1250 Views &nbsp;&nbsp;&nbsp;
+      </div>
+      <div>
+        <i class="fa-regular fa-clock"></i>&nbsp;&nbsp;5 Min Read
+      </div>
+    </div>
+  </div>
+
+
+</div>
