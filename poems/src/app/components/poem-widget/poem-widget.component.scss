@@ -64,6 +64,12 @@
   background: var(--black);
 }
 
+.poem-widget:hover {
+  .subtitle {
+    color: var(--light-grey-3);
+  }
+}
+
 .title {
   white-space: nowrap;
   text-overflow: ellipsis;

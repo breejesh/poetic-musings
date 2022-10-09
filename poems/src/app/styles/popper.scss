@@ -11,6 +11,7 @@
 .popper-dark {
   background: var(--dark-grey);
   color: var(--white);
+  opacity: 1 !important;
   border: 0px !important;
 }
 
@@ -18,5 +19,6 @@
 .popper-light {
   background: var(--light-grey);
   color: var(--black);
+  opacity: 1 !important;
   border: 0px;
 }
