@@ -16,13 +16,15 @@ export class SidebarComponent implements OnInit {
   }
 
   initSizeVariables() {
-    if (window.screen.width < 1200) {
+    if (window.innerWidth <= 1280) {
       this.showSidebar = false;
       this.isSmallerScreen = true;
     } else {
       this.showSidebar = true;
       this.isSmallerScreen = false;
     }
+    console.log('showSidebar', this.showSidebar);
+    console.log('isSmallerScreen', this.isSmallerScreen);
   }
 
   @HostListener('window:resize', ['$event'])

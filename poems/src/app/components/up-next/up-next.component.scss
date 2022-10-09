@@ -6,12 +6,46 @@
 }
 
 .up-next-content {
-  padding: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  overflow-y: hidden;
 }
 
 .up-next-text {
   font-size: 1.2rem;
+  padding-left: 2rem;
+  margin-bottom: 1rem;
+}
+
+
+@media (max-width: 1280px) {
+  .up-next-content-wrapper {
+    max-height: 25rem;
+    width: calc(100vw - var(--scrollbar-size));
+    max-width: 100%;
+  }
+
+  .up-next-text {
+    padding-left: 4rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .up-next-content {
+    margin-left: 2rem;
+    margin-bottom: var(--poem-player-height);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    overflow-x: hidden;
+    max-width: 100%;
+  }
+
+  .up-next-content .item:first-child {
+    margin-left: auto;
+  }
+
+  .up-next-content .item:last-child {
+    margin-right: auto;
+  }
 }

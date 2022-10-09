@@ -12,6 +12,7 @@ import { PoemPlayerComponent } from './components/poem-player/poem-player.compon
 import { NgxPopperModule } from 'ngx-popper';
 import { PoemWidgetComponent } from './components/poem-widget/poem-widget.component';
 import { UpNextComponent } from './components/up-next/up-next.component';
+import { FormatNumberShortSuffixPipe } from './pipes/format-number-suffix-short.pipe';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { UpNextComponent } from './components/up-next/up-next.component';
     PoemPlayerComponent,
     PoemWidgetComponent,
     UpNextComponent,
+    FormatNumberShortSuffixPipe,
   ],
   imports: [
     BrowserModule,
