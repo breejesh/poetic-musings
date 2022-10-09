@@ -9,12 +9,12 @@
     "footer footer footer";
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1200px) {
   .grid-layout {
     grid-template-columns: 1fr;
     grid-template-rows: auto 1fr auto auto !important;
     grid-template-areas:
-    "header"
+    "sidebar"
     "main"
     "rightbar"
     "footer";

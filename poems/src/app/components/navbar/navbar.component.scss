@@ -1,4 +1,4 @@
-.nav {
+.navbar {
   display: flex;
   flex-direction: row;
   flex: 1;
@@ -8,7 +8,7 @@
   background: var(--white);
 }
 
-.nav .brand {
+.navbar .brand {
   color: var(--black);
   font-family: "Tangerine", cursive;
   display: flex;
@@ -20,35 +20,35 @@
   padding-bottom: 1rem;
 }
 
-.nav .nav-left {
+.navbar .nav-left {
   padding-left: 5rem;
 }
 
-.nav .nav-right {
+.navbar .nav-right {
   padding-right: 3rem;
   display: flex;
   align-self: center;
   justify-self: center;
 }
 
-.nav .brand div {
+.navbar .brand div {
   align-self: center;
   justify-self: center;
 }
 
-.nav .nav-list {
+.navbar .nav-list {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
 }
 
-.nav ul {
+.navbar ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
 }
 
-.nav ul a {
+.navbar ul a {
   display: block;
   color: var(--black);
   text-align: center;
@@ -58,7 +58,7 @@
   font-weight: 500;
 }
 
-.nav ul a.active {
+.navbar ul a.active {
   border-bottom: 4px solid var(--black);
 }
 

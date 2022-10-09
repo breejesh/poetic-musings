@@ -16,20 +16,20 @@ body {
 }
 
 .number-font {
-  font-family: Georgia, serif;
+  font-size: 1.1rem;
+  font-weight: 500;
 }
 
 .cursor-pointer {
   cursor: pointer;
 }
 
-.poem-title {
+.title {
   font-family: 'Arima Madurai', cursive;
   font-size: 2rem;
-
 }
 
-.poem-author {
+.subtitle {
   opacity: 0.8;
   font-size: 1.4rem;
 }
@@ -44,6 +44,24 @@ body {
 
 .text-blue {
   color: var(--blue);
+}
+
+.hide-big {
+  display: none;
+}
+
+.hide-small {
+  display: block;
+}
+
+@media (max-width: 1200px) {
+  .hide-small {
+    display: none;
+  }
+
+  .hide-big {
+    display: block;
+  }
 }
 
 ::-webkit-scrollbar {

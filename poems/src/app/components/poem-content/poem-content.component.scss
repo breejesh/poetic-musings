@@ -13,3 +13,33 @@
   padding-right: 100px;
   padding-top: 50px;
 }
+
+
+
+@media (max-width: 1400px) {
+  .poem-container {
+    padding-left: 68px;
+    padding-right: 68px;
+  }
+  .poem-text {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 1200px) {
+  .poem-container {
+    padding-top: 0px;
+  }
+}
+
+@media (max-width: 767px) {
+  .poem-container {
+    padding-left: 28px;
+    padding-right: 28px;
+    padding-top: 0px;
+  }
+  .poem-text {
+    font-size: 1.2rem;
+  }
+}
+

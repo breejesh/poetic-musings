@@ -1,0 +1,56 @@
+.poem-widget {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 0.8rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: var(--white);
+  background: linear-gradient(to left, var(--white) 50%, var(--black) 50%) right;
+  background-size: 201%;
+  transition: 0.2s ease-out;
+  cursor: pointer;
+}
+
+.author-img {
+  object-fit: cover;
+  object-position: 0 0;
+  width: 80px;
+  height: 80px;
+  border-radius: 0.5rem;
+  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
+}
+
+.meta {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+}
+
+.poem-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100%;
+  margin-left: 1rem;
+}
+
+.title-author {
+  margin-bottom: 0.5rem;
+}
+
+.title-author .title {
+  line-height: 1.2rem;
+  font-size: 1.2rem;
+}
+
+.title-author .subtitle {
+  font-size: 1rem;
+}
+
+.poem-widget:hover {
+  color: var(--white);
+  background-position: left;
+
+}

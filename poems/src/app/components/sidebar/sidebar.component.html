@@ -1,12 +1,24 @@
-<div class="sidebar-content">
+<div class="navbar" *ngIf="isSmallerScreen">
+  <div class="nav-left">
+    <div class="brand">
+      <img class="navbar-logo" src="assets/logo.svg" />
+    </div>
+  </div>
+  <div class="nav-right">
+    <i class="fa-solid fa-bars navbar-drawer-icon" (click)="showSidebarClick()"></i>
+  </div>
+</div>
+<div class="sidebar-content {{isSmallerScreen == true ? 'full-width' : ''}}" *ngIf="showSidebar">
   <img class="logo" src="assets/logo.svg" />
-  <div class="nav">
-    <ul class="nav-list">
+  <div class="sidenav">
+    <ul class="sidenav-list">
       <li><a class="active" href="#Classics"><i class="fa-solid fa-feather-pointed"></i>&nbsp;Classics</a></li>
       <li><a href="#Contemporary"><i class="fa-solid fa-pen-nib"></i>&nbsp;Contemporary</a></li>
       <li><a href="#Community"><i class="fa-solid fa-users"></i>&nbsp;Community</a></li>
       <li><a href="#Favourites"><i class="fa-solid fa-heart"></i>&nbsp;Favourites</a></li>
     </ul>
   </div>
-
+  <div class="close-icon" *ngIf="isSmallerScreen">
+    <i class="fa-solid fa-circle-xmark" (click)="hideSidebarClick()"></i>
+  </div>
 </div>

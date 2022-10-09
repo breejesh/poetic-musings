@@ -11,6 +11,11 @@
   justify-content: flex-start;
 }
 
+.full-width {
+  width: 100%;
+  z-index: 2;
+}
+
 .logo {
   margin-top: 30px;
   margin-right: 20px;
@@ -18,28 +23,28 @@
   max-width: calc(var(--sidebar-width) - 80px);
 }
 
-.nav {
+.sidenav {
   margin-top: 50px;
 }
 
-.nav .nav-list {
+.sidenav .nav-list {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 
-.nav ul {
+.sidenav ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
 }
 
-.nav ul li {
+.sidenav ul li {
   margin-top: 10px;
   margin-bottom: 10px;
 }
 
-.nav ul a {
+.sidenav ul a {
   display: block;
   color: var(--black);
   text-align: left;
@@ -50,11 +55,58 @@
   font-weight: 500;
 }
 
-.nav ul a.active {
+.sidenav ul a.active {
   border-right: 8px solid var(--black);
   background-color: var(--light-grey-2);
 }
 
-.nav ul a:hover {
+.sidenav ul a:hover {
   background-color: var(--light-grey-2);
+}
+
+.close-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  cursor: pointer;
+  padding: 20px;
+}
+
+.navbar {
+  padding: 1rem 3rem;
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  justify-content: space-between;
+  background: var(--white);
+}
+
+@media (max-width: 767px) {
+  .navbar {
+    padding: 1rem;
+  }
+}
+
+.navbar .nav-left {
+}
+
+.navbar .nav-right {
+  padding-right: 0.4rem;
+  display: flex;
+  align-self: center;
+  justify-self: center;
+}
+
+.navbar .brand div {
+  align-self: center;
+  justify-self: center;
+}
+
+.navbar-logo {
+  height: 5rem;
+}
+
+.navbar-drawer-icon {
+  font-size: 1.8rem;
 }
