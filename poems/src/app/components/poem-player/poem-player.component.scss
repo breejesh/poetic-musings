@@ -1,6 +1,27 @@
+.author-img-placeholder {
+  grid-area: poem-image;
+}
+
+.title-author {
+  grid-area: poem-title;
+}
+
+.control {
+  grid-area: control;
+}
+
+.published {
+  grid-area: publish;
+}
+
+.meta {
+  grid-area: meta;
+}
+
 .poem-player {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-areas: "poem-image poem-title control publish meta";
+  grid-template-columns: auto auto 1fr auto auto !important;
   align-items: center;
   justify-content: space-between;
   color: var(--white);
@@ -38,6 +59,7 @@
 
 .author-img-placeholder {
   width: 160px;
+  margin-left: 2rem;
 }
 
 .author-img {
@@ -67,6 +89,7 @@
 }
 
 .meta {
+  padding-right: 2rem;
   margin-left: 2rem;
   font-size: 0.8rem;
   display: flex;
@@ -104,4 +127,91 @@
 .heart-hover:hover > .fa-solid.fa-heart.on-hover {
   transition: ease-in;
   display: inherit;
+}
+
+.title {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 400px;
+}
+
+.subtitle {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 400px;
+}
+
+@media (max-width: 1280px) {
+  .title {
+    max-width: 45vw;
+  }
+
+  .subtitle {
+    max-width: 45vw;
+  }
+
+  .author-img-placeholder {
+    margin-right: 1rem;
+    width: auto;
+  }
+
+  .published {
+    display: none;
+  }
+
+  .meta {
+    display: none;
+  }
+
+  .poem-player {
+    height: var(--poem-player-height-mobile);
+    grid-template-columns: auto auto 1fr !important;
+    justify-content: space-between;
+    grid-template-areas: "poem-image poem-title control" !important;
+  }
+
+  .author-img {
+    position: relative;
+    height: calc(var(--poem-player-height-mobile) - 20px);
+    width: calc(var(--poem-player-height-mobile) - 20px);
+  }
+
+  .control {
+    justify-content: flex-end;
+    margin-right: 1rem;
+  }
+}
+
+@media (max-width: 584px) {
+  .title {
+    max-width: 65vw;
+  }
+
+  .subtitle {
+    max-width: 65vw;
+  }
+
+  .author-img-placeholder {
+    margin-right: 1rem;
+    margin-left: 1rem;
+  }
+
+  .title-author {
+    margin-bottom: 0px;
+  }
+
+  .poem-player {
+    height: calc(var(--poem-player-height-mobile) + 20px);
+    grid-template-columns: auto 1fr !important;
+    justify-content: space-between;
+    grid-template-areas:
+      "poem-image poem-title"
+      "poem-image control" !important;
+  }
+
+  .control {
+    justify-content: flex-start;
+  }
 }

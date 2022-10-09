@@ -10,6 +10,7 @@ body {
   font-family: 'Abyssinica SIL', serif;
   width: 100vw;
   max-width: 100%;
+  overflow-x: hidden;
 }
 
 .spacer {
@@ -50,20 +51,20 @@ body {
 }
 
 .hide-big {
-  display: none;
+  display: none !important;
 }
 
 .hide-small {
-  display: block;
+  display: block !important;
 }
 
 @media (max-width: 1280px) {
   .hide-small {
-    display: none;
+    display: none !important;
   }
 
   .hide-big {
-    display: block;
+    display: block !important;
   }
 }
 

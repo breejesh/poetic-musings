@@ -21,7 +21,7 @@
 @media (max-width: 1280px) {
   .up-next-content-wrapper {
     max-height: 25rem;
-    width: calc(100vw - var(--scrollbar-size));
+    width: 100vw;
     max-width: 100%;
   }
 
@@ -32,7 +32,7 @@
 
   .up-next-content {
     margin-left: 2rem;
-    margin-bottom: var(--poem-player-height);
+    margin-bottom: calc(var(--poem-player-height) + 20px);
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -47,5 +47,11 @@
 
   .up-next-content .item:last-child {
     margin-right: auto;
+  }
+}
+
+@media (max-width: 584px) {
+  .up-next-content {
+    margin-bottom: calc(var(--poem-player-height) + 40px);
   }
 }
