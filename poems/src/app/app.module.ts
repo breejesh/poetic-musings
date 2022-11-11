@@ -13,6 +13,7 @@ import { NgxPopperModule } from 'ngx-popper';
 import { PoemWidgetComponent } from './components/poem-widget/poem-widget.component';
 import { UpNextComponent } from './components/up-next/up-next.component';
 import { FormatNumberShortSuffixPipe } from './pipes/format-number-suffix-short.pipe';
+import { LandingComponent } from './pages/landing/landing.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { FormatNumberShortSuffixPipe } from './pipes/format-number-suffix-short.
     PoemWidgetComponent,
     UpNextComponent,
     FormatNumberShortSuffixPipe,
+    LandingComponent,
   ],
   imports: [
     BrowserModule,

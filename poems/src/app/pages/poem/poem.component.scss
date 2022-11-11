@@ -1,4 +1,4 @@
-.grid-layout {
+.poem-grid-layout {
   min-height: 100vh;
   height: 100vh;
   display: grid;
@@ -10,7 +10,7 @@
 }
 
 @media (max-width: 1280px) {
-  .grid-layout {
+  .poem-grid-layout {
     grid-template-columns: 1fr;
     grid-template-rows: auto 1fr auto auto !important;
     grid-template-areas:
