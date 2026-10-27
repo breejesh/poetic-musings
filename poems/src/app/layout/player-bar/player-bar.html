@@ -32,7 +32,7 @@
         <button class="icon-btn hide-sm" type="button" (click)="player.prev()" aria-label="Previous poem" title="Previous (P)">
           <app-icon name="prev" [fill]="true" />
         </button>
-        <button class="play" type="button" (click)="player.toggle()" [attr.aria-label]="player.playing() ? 'Pause' : 'Play'" title="Play / pause (Space)">
+        <button class="play" type="button" (click)="togglePlay()" [attr.aria-label]="player.playing() ? 'Pause' : 'Play'" title="Play / pause (Space)">
           @if (player.loading() && player.state() !== 'idle') {
             <span class="spinner"></span>
           } @else {
@@ -42,7 +42,7 @@
         <button class="icon-btn" type="button" (click)="player.next()" aria-label="Next poem" title="Next (N)">
           <app-icon name="next" [fill]="true" />
         </button>
-        <button class="icon-btn dot hide-sm" type="button" [class.on]="player.repeat() !== 'off'" (click)="player.cycleRepeat()" [attr.aria-label]="'Repeat: ' + player.repeat()" title="Repeat (R)">
+        <button class="icon-btn dot hide-sm" type="button" [class.on]="player.repeat() === 'one'" (click)="player.cycleRepeat()" [attr.aria-pressed]="player.repeat() === 'one'" aria-label="Repeat this poem" title="Repeat (R)">
           <app-icon [name]="player.repeat() === 'one' ? 'repeat-one' : 'repeat'" />
         </button>
       </div>
@@ -54,6 +54,18 @@
     </div>
 
     <div class="extras">
+      <button
+        class="pill autoplay"
+        type="button"
+        role="switch"
+        [class.on]="player.autoplay()"
+        [attr.aria-checked]="player.autoplay()"
+        (click)="toggleAutoplay()"
+        title="Autoplay — start the next poem when one ends (A)"
+      >
+        <span class="switch" aria-hidden="true"><i></i></span>
+        <span class="label">Autoplay</span>
+      </button>
       <button class="pill speed" type="button" (click)="player.cycleSpeed()" aria-label="Playback speed" title="Reading speed">
         {{ player.speed() }}×
       </button>

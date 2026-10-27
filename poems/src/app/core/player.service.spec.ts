@@ -27,7 +27,7 @@ describe('timeline', () => {
 
   it('adds a pause between stanzas', () => {
     const t = buildTimeline(detail);
-    expect(t.starts[2] - t.ends[1]).toBe(1200);
+    expect(t.starts[2] - t.ends[1]).toBe(960);
   });
 
   it('finds the line playing at a time', () => {

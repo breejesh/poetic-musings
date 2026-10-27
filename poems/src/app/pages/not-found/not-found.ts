@@ -15,7 +15,7 @@ import { Icon } from '../../ui/icon';
         and you — you took the one that isn’t there.
       </p>
       <div class="actions">
-        <a class="btn" routerLink="/">Back to Listen Now</a>
+        <a class="btn" routerLink="/">Back to Read Now</a>
         <button class="btn ghost" type="button" (click)="player.surprise()"><app-icon name="dice" /> Surprise me</button>
       </div>
     </div>

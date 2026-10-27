@@ -29,6 +29,13 @@ import { EqBars } from '../../ui/eq-bars';
         Up next
         <span>{{ upcoming().length }} poems · {{ upcomingLength() }}</span>
       </p>
+      <button class="autoplay" type="button" role="switch" [attr.aria-checked]="player.autoplay()" (click)="player.toggleAutoplay()">
+        <span>
+          <b>Autoplay</b>
+          <small>{{ player.autoplay() ? 'The next poem starts when one ends' : 'Poems stop when they end' }}</small>
+        </span>
+        <span class="switch" [class.on]="player.autoplay()" aria-hidden="true"><i></i></span>
+      </button>
       <ol class="list">
         @for (t of upcoming(); track t.slug; let i = $index) {
           <li>

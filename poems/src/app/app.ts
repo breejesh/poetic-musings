@@ -107,7 +107,7 @@ export class App {
         break;
       case 'r':
         this.player.cycleRepeat();
-        this.ui.toast({ off: 'Repeat off', all: 'Repeat all', one: 'Repeat this poem' }[this.player.repeat()], 'repeat');
+        this.ui.toast(this.player.repeat() === 'one' ? 'Repeat this poem' : 'Repeat off', 'repeat');
         break;
       case 'l': {
         const t = this.player.track();
@@ -117,6 +117,10 @@ export class App {
         }
         break;
       }
+      case 'a':
+        this.player.toggleAutoplay();
+        this.ui.toast(this.player.autoplay() ? 'Autoplay on' : 'Autoplay off', 'next');
+        break;
       case 'f':
         if (this.player.track()) this.ui.stageOpen.update((o) => !o);
         break;

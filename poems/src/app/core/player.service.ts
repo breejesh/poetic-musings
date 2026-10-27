@@ -7,7 +7,7 @@ import { shuffle as shuffled, stripHtml } from './format';
 import { storedSignal } from './storage';
 
 export type PlayState = 'idle' | 'playing' | 'paused' | 'ended';
-export type RepeatMode = 'off' | 'all' | 'one';
+export type RepeatMode = 'off' | 'one';
 
 /** Per-line timing for a poem — the "audio" the player scrubs through. */
 export interface Timeline {
@@ -24,8 +24,10 @@ export interface Timeline {
   total: number;
 }
 
-const WPM = 130;
-const STANZA_PAUSE = 1200;
+// Reading pace at 1×: a brisk read-aloud (~160 wpm) with a short breath between stanzas.
+// Keep in step with WPM / STANZA_SECONDS in tools/build-data.mjs, which estimates track lengths.
+const WPM = 162;
+const STANZA_PAUSE = 960;
 
 export function buildTimeline(detail: PoemDetail): Timeline {
   const t: Timeline = { text: [], source: [], starts: [], ends: [], weight: [], total: 0 };
@@ -43,7 +45,7 @@ export function buildTimeline(detail: PoemDetail): Timeline {
     t.starts.push(at);
     t.weight.push(text.length);
     longest = Math.max(longest, text.length);
-    at += Math.max(900, 250 + (words * 60000) / WPM);
+    at += Math.max(720, 200 + (words * 60000) / WPM);
     t.ends.push(at);
   });
   t.total = at;
@@ -66,7 +68,7 @@ export function lineAt(starts: number[], ms: number): number {
 
 /**
  * The poem "player". A poem plays like a track: lines light up at a read-aloud pace
- * and the queue advances, shuffle and repeat work.
+ * and the queue, shuffle and repeat work. A finished poem stops unless autoplay is turned on.
  */
 @Injectable({ providedIn: 'root' })
 export class PlayerService {
@@ -87,6 +89,8 @@ export class PlayerService {
   readonly speed = storedSignal<number>('speed', 1);
   readonly shuffle = storedSignal<boolean>('shuffle', false);
   readonly repeat = storedSignal<RepeatMode>('repeat', 'off');
+  /** Start the next poem when one finishes. Off by default — the reader chooses when to move on. */
+  readonly autoplay = storedSignal<boolean>('autoplay', false);
 
   readonly playing = computed(() => this.state() === 'playing');
   /** True once the listener has started this poem — lines become seekable. */
@@ -123,6 +127,8 @@ export class PlayerService {
   private loadToken = 0;
 
   constructor() {
+    // "Repeat all" no longer exists (poems don't auto-advance); treat an old saved value as off.
+    if ((this.repeat() as string) === 'all') this.repeat.set('off');
     this.setupMediaSession();
     // Restore the last poem into the bar (paused) once the catalog is available.
     effect(() => {
@@ -236,7 +242,8 @@ export class PlayerService {
     if (andPlay && !this.playing()) this.resume();
   }
 
-  next(auto = false) {
+  /** Skip to the next poem in the queue; it starts playing if `play` (default: if something is playing now). */
+  next(play = this.playing()) {
     const queue = this.queue();
     if (!queue.length) return;
     let i: number;
@@ -247,20 +254,13 @@ export class PlayerService {
       i = this.index() + 1;
     }
     if (i >= queue.length) {
-      if (this.repeat() === 'all') i = 0;
-      else if (auto) {
-        this.state.set('ended');
-        this.stopLoop();
-        return;
-      } else {
-        // Manual skip past the end: keep the music going with a fresh radio queue.
-        const current = this.track();
-        const more = current ? this.catalog.radio(current).filter((t) => !queue.some((q) => q.slug === t.slug)) : [];
-        if (!more.length) return;
-        this.queue.set([...queue, ...more]);
-      }
+      // Skipping past the end of the queue: top it up with a fresh "radio" selection.
+      const current = this.track();
+      const more = current ? this.catalog.radio(current).filter((t) => !queue.some((q) => q.slug === t.slug)) : [];
+      if (!more.length) return;
+      this.queue.set([...queue, ...more]);
     }
-    this.goTo(i, auto || this.playing());
+    this.goTo(i, play);
   }
 
   prev() {
@@ -285,12 +285,16 @@ export class PlayerService {
     if (t) this.play(t, [t, ...this.catalog.radio(t)]);
   }
 
+  toggleAutoplay() {
+    this.autoplay.update((a) => !a);
+  }
+
   toggleShuffle() {
     this.shuffle.update((s) => !s);
   }
 
   cycleRepeat() {
-    this.repeat.update((r) => (r === 'off' ? 'all' : r === 'all' ? 'one' : 'off'));
+    this.repeat.update((r) => (r === 'one' ? 'off' : 'one'));
   }
 
   cycleSpeed() {
@@ -339,7 +343,8 @@ export class PlayerService {
       return;
     }
     this.state.set('ended');
-    this.next(true);
+    // Only move on by itself when the reader has asked for autoplay.
+    if (this.autoplay()) this.next(true);
   }
 
   // ------------------------------------------------------------------ OS integration

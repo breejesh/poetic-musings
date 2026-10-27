@@ -7,7 +7,7 @@ import { UiService } from '../../core/ui.service';
 
 export const NAV = {
   discover: [
-    { path: '/', label: 'Listen Now', icon: 'home', exact: true },
+    { path: '/', label: 'Read Now', icon: 'home', exact: true },
     { path: '/browse', label: 'Browse', icon: 'grid', exact: false },
     { path: '/charts', label: 'Top 100', icon: 'charts', exact: false },
   ],

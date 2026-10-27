@@ -8,7 +8,7 @@
     </button>
     <div class="source">
       <span class="eyebrow">Now playing</span>
-      <span>Reading at {{ player.speed() }}×</span>
+      <span>{{ player.state() === 'ended' ? 'Finished' : 'Reading at ' + player.speed() + '×' }}</span>
     </div>
     <button class="icon-btn" type="button" (click)="ui.queueOpen.set(true)" aria-label="Up next"><app-icon name="queue" /></button>
   </header>
@@ -50,12 +50,15 @@
           <app-icon [name]="player.playing() ? 'pause' : 'play'" [fill]="true" />
         </button>
         <button class="icon-btn big" type="button" (click)="player.next()" aria-label="Next"><app-icon name="next" [fill]="true" /></button>
-        <button class="icon-btn dot" type="button" [class.on]="player.repeat() !== 'off'" (click)="player.cycleRepeat()" aria-label="Repeat">
+        <button class="icon-btn dot" type="button" [class.on]="player.repeat() === 'one'" (click)="player.cycleRepeat()" [attr.aria-pressed]="player.repeat() === 'one'" aria-label="Repeat this poem">
           <app-icon [name]="player.repeat() === 'one' ? 'repeat-one' : 'repeat'" />
         </button>
       </div>
 
       <div class="modes">
+        <button class="mode" type="button" role="switch" [class.on]="player.autoplay()" [attr.aria-checked]="player.autoplay()" (click)="player.toggleAutoplay()">
+          <app-icon name="next" [fill]="true" /> Autoplay {{ player.autoplay() ? 'on' : 'off' }}
+        </button>
         <button class="mode" type="button" (click)="player.cycleSpeed()"><app-icon name="gauge" /> {{ player.speed() }}×</button>
       </div>
     </aside>

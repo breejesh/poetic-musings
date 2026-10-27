@@ -69,6 +69,65 @@ header {
   }
 }
 
+.autoplay {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0 6px 10px;
+  padding: 0.7rem 0.8rem;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  cursor: pointer;
+
+  b {
+    display: block;
+    font: 600 0.9rem var(--font-ui);
+  }
+  small {
+    font: 400 0.78rem var(--font-ui);
+    color: var(--ink-3);
+  }
+  &:hover {
+    background: var(--hover);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--focus);
+  }
+}
+
+.switch {
+  position: relative;
+  flex-shrink: 0;
+  width: 2.25rem;
+  height: 1.3rem;
+  border-radius: 99px;
+  background: var(--surface-3);
+  transition: background 0.2s;
+
+  i {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: calc(1.3rem - 6px);
+    height: calc(1.3rem - 6px);
+    border-radius: 50%;
+    background: var(--surface);
+    box-shadow: 0 1px 3px rgb(0 0 0 / 0.25);
+    transition: transform 0.2s var(--ease);
+  }
+  &.on {
+    background: var(--ink);
+
+    i {
+      background: var(--bg);
+      transform: translateX(0.95rem);
+    }
+  }
+}
+
 .list {
   list-style: none;
   margin: 0;

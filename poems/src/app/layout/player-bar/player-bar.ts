@@ -44,6 +44,18 @@ export class PlayerBar {
     if (t) this.ui.share(`${t.title} — ${t.author}`, `poem/${t.slug}`);
   }
 
+  /** Pause in place; but starting playback also opens the poem, so you can read along. */
+  protected togglePlay() {
+    const t = this.player.track();
+    if (this.player.playing() || !t) this.player.toggle();
+    else this.player.play(t);
+  }
+
+  protected toggleAutoplay() {
+    this.player.toggleAutoplay();
+    this.ui.toast(this.player.autoplay() ? 'Autoplay on — the next poem starts by itself' : 'Autoplay off — poems stop when they end', 'next');
+  }
+
   protected openStage(e: Event) {
     // On phones the whole mini player opens the stage; on desktop only the vinyl does.
     if ((e.target as HTMLElement).closest('button, a') || !matchMedia('(max-width: 1023px)').matches) return;

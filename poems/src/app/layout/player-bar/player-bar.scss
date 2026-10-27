@@ -266,6 +266,45 @@
   }
 }
 
+.pill.autoplay {
+  gap: 0.5rem;
+
+  // When "on", keep the pill dark and let the switch carry the state.
+  &.on {
+    background: transparent;
+    color: var(--stage-ink);
+    border-color: rgb(255 255 255 / 0.3);
+  }
+}
+
+.switch {
+  position: relative;
+  width: 1.75rem;
+  height: 1rem;
+  border-radius: 99px;
+  background: rgb(255 255 255 / 0.2);
+  transition: background 0.2s;
+
+  i {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: calc(1rem - 4px);
+    height: calc(1rem - 4px);
+    border-radius: 50%;
+    background: var(--stage-ink);
+    transition: transform 0.2s var(--ease);
+  }
+  .on & {
+    background: var(--paper-white);
+
+    i {
+      background: var(--stage);
+      transform: translateX(0.75rem);
+    }
+  }
+}
+
 // ------------------------------------------------------------ responsive
 
 @media (max-width: 1280px) {
@@ -273,7 +312,7 @@
     grid-template-columns: minmax(0, 1fr) minmax(280px, 1.4fr) auto;
     gap: 1rem;
   }
-  .pill span {
+  .pill .label {
     display: none;
   }
   .pill:not(.speed) {

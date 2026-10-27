@@ -58,6 +58,13 @@
             <span class="time">{{ elapsed() }}</span>
             <app-waveform class="wave" [maxBars]="110" />
             <span class="time">{{ duration() }}</span>
+            @if (player.state() === 'ended' && next(); as n) {
+              <button class="finished" type="button" (click)="player.next()">
+                <span class="finished-label">Finished · Up next</span>
+                <span class="finished-title">{{ n.title }}</span>
+                <app-icon name="next" [fill]="true" />
+              </button>
+            }
           </div>
         }
 

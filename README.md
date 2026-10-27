@@ -32,7 +32,7 @@
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="doc-images/home-dark.webp">
-    <img src="doc-images/home-light.webp" alt="Poetic Musings — Listen Now" width="900">
+    <img src="doc-images/home-light.webp" alt="Poetic Musings — Read Now" width="900">
   </picture>
 </p>
 
@@ -44,8 +44,8 @@ Music apps are wonderful at one thing poetry sites rarely manage: making you wan
 Poetic Musings borrows the whole grammar — charts, artists, genres, queues, a player bar with a
 spinning record — and points it at **12,346 poems by 3,256 poets**A poem “plays” like a track: each line is timed to a natural reading pace, the current line is
 marked and fills in as you go, and the page follows along. Its length shows up as a track duration
-(*The Raven* is 8:35, *Nothing Gold Can Stay* is 0:20). When it ends, the next poem in your queue
-begins.
+(*The Raven* is 6:53, *Nothing Gold Can Stay* is 0:16). When it ends it stops, with the next poem in
+your queue one tap away — or switch on **Autoplay** to keep going.
 
 <p align="center">
   <img src="doc-images/synced-reading.webp" alt="A poem playing in Stage mode, line by line" width="860">
@@ -64,7 +64,7 @@ begins.
 | **Generative album art** | Every poem gets its own sleeve — sun-over-horizon, grooves, Bauhaus arches, halftone, waves, a giant initial — seeded by its slug, so it never changes. |
 | **Poets as artists** | Portrait headers, life dates, movements, and a short biography (from Wikipedia, with a drop cap), plus their discography and “readers also love”. |
 | **Charts, genres, eras** | Top 100, Classics (pre-1950) and Contemporary, six eras from the Renaissance to now, and 37 movements from Romanticism to Slam. |
-| **Queue, shuffle, repeat** | Anything you play becomes the queue; opening a poem directly builds a “radio” from the poet and their neighbours on the charts. |
+| **Queue, shuffle, autoplay** | Anything you play becomes the queue; opening a poem directly builds a “radio” from the poet and their neighbours on the charts. Poems stop when they end unless Autoplay is on; Repeat replays the current poem. |
 | **Instant search** | <kbd>Ctrl</kbd>/<kbd>⌘</kbd>+<kbd>K</kbd> from anywhere — titles and poets, ranked by popularity. <kbd>⇧</kbd>+<kbd>↵</kbd> plays straight away. |
 | **Your library** | Liked poems and reading history, kept on your device. |
 | **Paper & ink** | A warm light theme and a true-black dark theme, WCAG-AA contrast throughout, paper grain, and reduced-motion support. |
@@ -82,7 +82,7 @@ begins.
 
 <p align="center">
   <img src="doc-images/mobile.webp" alt="Poetic Musings on a phone" width="860">
-  <br><sub><i>On a phone — Listen Now, a poem playing, Stage mode and a poet page.</i></sub>
+  <br><sub><i>On a phone — Read Now, a poem playing, Stage mode and a poet page.</i></sub>
 </p>
 
 <table>
@@ -129,8 +129,8 @@ chart position and estimated read time — enough for charts, search, genres and
 **A poem’s text** is fetched only when you open it: one small JSON file of `[indent, html]` lines.
 
 **Playing a poem** is a timeline. `PlayerService` turns the lines into start times (word count at
-~130 wpm, a pause at stanza breaks) and runs a `requestAnimationFrame` clock through them. Everything else
-— the active line, the waveform, the elapsed time, the mini-player’s quoted line, auto-advance — is a
+~160 wpm, a breath at stanza breaks) and runs a `requestAnimationFrame` clock through them. Everything else
+— the active line, the waveform, the elapsed time, the mini-player’s quoted line — is a
 `computed()` signal derived from one `position` value.
 
 <details>
@@ -162,7 +162,8 @@ chart position and estimated read time — enough for charts, search, genres and
 | <kbd>N</kbd> / <kbd>P</kbd> | Next / previous poem | <kbd>Q</kbd> | Queue |
 | <kbd>→</kbd> / <kbd>←</kbd> | Next / previous line | <kbd>L</kbd> | Like |
 | <kbd>S</kbd> | Shuffle | <kbd>T</kbd> | Light / dark |
-| <kbd>R</kbd> | Repeat (off → all → one) | <kbd>/</kbd> or <kbd>Ctrl</kbd>+<kbd>K</kbd> | Search |
+| <kbd>R</kbd> | Repeat this poem | <kbd>/</kbd> or <kbd>Ctrl</kbd>+<kbd>K</kbd> | Search |
+| <kbd>A</kbd> | Autoplay next poem | <kbd>?</kbd> | All shortcuts |
 
 ---
 

@@ -127,6 +127,41 @@
     --wave-height: 24px;
     color: var(--ink);
   }
+  .finished {
+    all: unset;
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.55rem 0.9rem;
+    border-radius: 12px;
+    background: var(--ink);
+    color: var(--bg);
+    cursor: pointer;
+    font: 500 0.85rem var(--font-ui);
+    animation: page-in 0.35s var(--ease) both;
+
+    &:hover {
+      transform: translateY(-1px);
+    }
+    &:focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: 2px;
+    }
+  }
+  .finished-label {
+    opacity: 0.75;
+    white-space: nowrap;
+  }
+  .finished-title {
+    flex: 1;
+    min-width: 0;
+    font: 500 1rem var(--font-display);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   .time,
   .status {
     font: 500 0.74rem var(--font-ui);

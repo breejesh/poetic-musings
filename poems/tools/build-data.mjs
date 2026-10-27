@@ -21,8 +21,9 @@ const CATALOG = path.join(OUT_DATA, 'catalog.json');
 const args = new Set(process.argv.slice(2));
 if (args.has('--if-missing') && fs.existsSync(CATALOG)) process.exit(0);
 
-// Words per minute for a measured, read-aloud pace. Drives the "track length".
-const WPM = 130;
+// Reading pace for the "track length" — keep in step with PlayerService's timeline.
+const WPM = 162;
+const STANZA_SECONDS = 0.96;
 // Poems published before this year are filed under Classics.
 const CLASSIC_BEFORE = 1950;
 
@@ -183,7 +184,7 @@ function build() {
     const words = text.split(/\s+/).filter(Boolean).length;
     const lineCount = lines.filter(([, l]) => l).length;
     const stanzas = lines.filter(([, l]) => !l).length + 1;
-    const seconds = Math.max(12, Math.round((words / WPM) * 60 + stanzas * 1.2));
+    const seconds = Math.max(10, Math.round((words / WPM) * 60 + stanzas * STANZA_SECONDS));
 
     let published = year(p.field_date_published);
     const died = poetIdx >= 0 ? poets[poetIdx][3] : null;

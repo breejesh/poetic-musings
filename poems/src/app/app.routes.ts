@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
-  { path: '', title: 'Listen Now', loadComponent: () => import('./pages/home/home').then((m) => m.HomePage) },
+  { path: '', title: 'Read Now', loadComponent: () => import('./pages/home/home').then((m) => m.HomePage) },
   { path: 'browse', title: 'Browse', loadComponent: () => import('./pages/browse/browse').then((m) => m.BrowsePage) },
   { path: 'movements', redirectTo: 'browse' },
   {
