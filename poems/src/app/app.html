@@ -1,0 +1,30 @@
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell" [class.has-player]="!!player.track()">
+  <app-sidebar class="sidebar" />
+  <app-mobile-nav class="mobile-nav" />
+  <main #main id="main" class="content" tabindex="-1">
+    @if (catalog.error(); as error) {
+      <div class="empty">
+        <h3>Something's out of tune</h3>
+        <p>{{ error }}</p>
+      </div>
+    } @else {
+      <router-outlet />
+    }
+  </main>
+  <app-player-bar class="player" />
+</div>
+
+@if (ui.queueOpen()) {
+  <app-queue-panel />
+}
+@if (ui.stageOpen() && player.track()) {
+  <app-stage />
+}
+@if (ui.paletteOpen()) {
+  <app-command-palette />
+}
+@if (ui.shortcutsOpen()) {
+  <app-shortcuts />
+}
+<app-toasts />

@@ -1,0 +1,54 @@
+<div class="genre">
+  <aside class="ribbon" aria-hidden="true">
+    <app-icon class="ribbon-icon" [name]="copy().icon" />
+    <span class="ribbon-word">{{ copy().title }}</span>
+  </aside>
+
+  <div class="page body">
+    <header class="head">
+      <p class="eyebrow">Genre</p>
+      <div class="title-row">
+        <h1 class="display">{{ copy().title }}</h1>
+        <button class="play-fab" type="button" (click)="play()" [attr.aria-label]="'Play ' + copy().title">
+          <app-icon [name]="isPlayingHere() ? 'pause' : 'play'" [fill]="true" />
+        </button>
+      </div>
+      <p class="blurb">{{ copy().blurb }}</p>
+      <div class="stat-row">
+        <span>{{ stats().poems }} poems</span>
+        <span>{{ stats().poets }} poets</span>
+        @if (stats().span) {
+          <span>{{ stats().span }}</span>
+        }
+        <span>{{ stats().time }} of reading</span>
+      </div>
+      <div class="actions">
+        <button class="btn" type="button" (click)="play()"><app-icon name="play" [fill]="true" /> Play</button>
+        <button class="btn ghost" type="button" (click)="play(true)"><app-icon name="shuffle" /> Shuffle</button>
+      </div>
+    </header>
+
+    <section class="section">
+      <div class="section-head"><h2>Defining voices</h2></div>
+      <div class="shelf poets">
+        @for (p of poets(); track p.slug) {
+          <app-poet-card [poet]="p" />
+        }
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>All {{ copy().title.toLowerCase() }}</h2>
+        <div class="chips" role="tablist" aria-label="Sort">
+          @for (s of sorts; track s.key) {
+            <button class="chip" type="button" role="tab" [class.active]="sort() === s.key" [attr.aria-selected]="sort() === s.key" (click)="sort.set(s.key)">
+              {{ s.label }}
+            </button>
+          }
+        </div>
+      </div>
+      <app-track-list [tracks]="sorted()" [numbering]="sort() === 'popular' ? 'rank' : 'index'" />
+    </section>
+  </div>
+</div>

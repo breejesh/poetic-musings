@@ -1,0 +1,150 @@
+.hero {
+  position: relative;
+  overflow: hidden;
+  background: var(--stage);
+  color: var(--stage-ink);
+  min-height: clamp(300px, 42vh, 440px);
+  display: flex;
+  align-items: flex-end;
+  --ink-3: var(--stage-ink-2);
+  --line: rgb(255 255 255 / 0.18);
+  --ink-2: var(--stage-ink-2);
+  --ink: var(--stage-ink);
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgb(18 17 16 / 0.2) 0%, var(--stage) 100%),
+      linear-gradient(90deg, var(--stage) 0%, transparent 60%);
+  }
+}
+
+.bg-pic {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: min(70%, 900px);
+  height: 140%;
+  aspect-ratio: auto;
+  --portrait-radius: 0;
+  --portrait-filter: grayscale(1) contrast(1.25) brightness(0.7) blur(2px);
+  --monogram-size: 12rem;
+  opacity: 0.8;
+  mask-image: linear-gradient(90deg, transparent, #000 40%);
+}
+
+.hero-inner {
+  position: relative;
+  width: 100%;
+  max-width: 1480px;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-end;
+  gap: clamp(20px, 3vw, 40px);
+  padding: 48px var(--gutter) 36px;
+}
+
+.pic {
+  width: clamp(140px, 16vw, 220px);
+  box-shadow: 0 24px 60px rgb(0 0 0 / 0.5);
+  --monogram-size: 4.5rem;
+  animation: pic-in 0.7s var(--ease) both;
+}
+
+@keyframes pic-in {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+}
+
+.hero-text {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding-bottom: 0.4rem;
+}
+
+.name {
+  margin: 0.1rem 0 0.2rem;
+  overflow-wrap: anywhere;
+}
+
+.chips {
+  margin-top: 0.3rem;
+}
+
+.tagline {
+  font: italic 400 1.3rem/1.35 var(--font-serif);
+  color: var(--stage-ink-2);
+  margin: -0.2rem 0 0.2rem;
+}
+
+.about .bio {
+  max-width: 68ch;
+  display: grid;
+  gap: 1rem;
+
+  p {
+    font: 400 clamp(1.12rem, 0.5vw + 1rem, 1.28rem) / 1.65 var(--font-serif);
+    color: var(--ink);
+  }
+  // A drop cap on the first paragraph, letterpress style.
+  p:first-child::first-letter {
+    float: left;
+    font: 500 3.6em/0.82 var(--font-display);
+    padding: 0.08em 0.1em 0 0;
+    color: var(--ink);
+  }
+}
+
+.credit {
+  margin-top: 1rem;
+  font: 400 0.8rem var(--font-ui);
+  color: var(--ink-3);
+
+  a {
+    color: inherit;
+  }
+}
+
+.bio-skel {
+  display: grid;
+  gap: 0.7rem;
+  max-width: 68ch;
+
+  .skeleton {
+    height: 1.1rem;
+  }
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.section-head {
+  flex-wrap: wrap;
+}
+
+@media (max-width: 640px) {
+  .hero-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .pic {
+    width: 120px;
+  }
+  .bg-pic {
+    width: 100%;
+  }
+}

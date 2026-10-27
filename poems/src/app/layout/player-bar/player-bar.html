@@ -1,0 +1,71 @@
+@if (player.track(); as t) {
+  <section class="bar" aria-label="Player" (click)="openStage($event)">
+    <div class="mini-progress" [style.transform]="'scaleX(' + player.progress() + ')'"></div>
+
+    <div class="now">
+      <button class="vinyl" type="button" [class.spinning]="player.playing()" (click)="ui.stageOpen.set(true)" aria-label="Open full-screen player">
+        <span class="grooves"></span>
+        <app-portrait class="label" [poet]="t.poet" [name]="t.author" size="lg" />
+        <span class="spindle"></span>
+      </button>
+      <div class="meta">
+        <a class="title" [routerLink]="['/poem', t.slug]" [title]="t.title">{{ t.title }}</a>
+        @if (t.poet) {
+          <a class="poet" [routerLink]="['/poet', t.poet.slug]">{{ t.author }}</a>
+        } @else {
+          <span class="poet">{{ t.author }}</span>
+        }
+        @if (currentLine()) {
+          <span class="line" aria-live="off">{{ currentLine() }}</span>
+        }
+      </div>
+      <button class="icon-btn heart" type="button" [class.liked]="liked()" (click)="like()" [attr.aria-pressed]="liked()" [attr.aria-label]="liked() ? 'Unlike' : 'Like'" title="Like (L)">
+        <app-icon name="heart" [fill]="liked()" />
+      </button>
+    </div>
+
+    <div class="transport">
+      <div class="buttons">
+        <button class="icon-btn dot hide-sm" type="button" [class.on]="player.shuffle()" (click)="player.toggleShuffle()" [attr.aria-pressed]="player.shuffle()" aria-label="Shuffle" title="Shuffle (S)">
+          <app-icon name="shuffle" />
+        </button>
+        <button class="icon-btn hide-sm" type="button" (click)="player.prev()" aria-label="Previous poem" title="Previous (P)">
+          <app-icon name="prev" [fill]="true" />
+        </button>
+        <button class="play" type="button" (click)="player.toggle()" [attr.aria-label]="player.playing() ? 'Pause' : 'Play'" title="Play / pause (Space)">
+          @if (player.loading() && player.state() !== 'idle') {
+            <span class="spinner"></span>
+          } @else {
+            <app-icon [name]="player.playing() ? 'pause' : 'play'" [fill]="true" />
+          }
+        </button>
+        <button class="icon-btn" type="button" (click)="player.next()" aria-label="Next poem" title="Next (N)">
+          <app-icon name="next" [fill]="true" />
+        </button>
+        <button class="icon-btn dot hide-sm" type="button" [class.on]="player.repeat() !== 'off'" (click)="player.cycleRepeat()" [attr.aria-label]="'Repeat: ' + player.repeat()" title="Repeat (R)">
+          <app-icon [name]="player.repeat() === 'one' ? 'repeat-one' : 'repeat'" />
+        </button>
+      </div>
+      <div class="scrub">
+        <span class="time">{{ elapsed() }}</span>
+        <app-waveform class="wave" [maxBars]="90" />
+        <span class="time">{{ remaining() }}</span>
+      </div>
+    </div>
+
+    <div class="extras">
+      <button class="pill speed" type="button" (click)="player.cycleSpeed()" aria-label="Playback speed" title="Reading speed">
+        {{ player.speed() }}×
+      </button>
+      <button class="icon-btn" type="button" [class.on]="ui.queueOpen()" (click)="ui.queueOpen.set(!ui.queueOpen())" aria-label="Up next" title="Queue (Q)">
+        <app-icon name="queue" />
+      </button>
+      <button class="icon-btn" type="button" (click)="share()" aria-label="Share" title="Share">
+        <app-icon name="share" />
+      </button>
+      <button class="icon-btn" type="button" (click)="ui.stageOpen.set(true)" aria-label="Full-screen player" title="Stage mode (F)">
+        <app-icon name="expand" />
+      </button>
+    </div>
+  </section>
+}

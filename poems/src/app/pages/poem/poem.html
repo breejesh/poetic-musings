@@ -1,0 +1,173 @@
+@if (notFound()) {
+  <div class="page empty">
+    <app-icon name="book" />
+    <h3>This poem has wandered off</h3>
+    <p>We couldn’t find “{{ slug() }}”. Try searching for it instead.</p>
+    <a class="btn" routerLink="/search" [queryParams]="{ q: slug().replaceAll('-', ' ') }">Search</a>
+  </div>
+} @else {
+  <div class="poem-page">
+    <article class="reader">
+      @if (track(); as t) {
+        <header class="head">
+          <app-cover class="head-cover" [class.live]="isCurrent() && player.playing()" [seed]="t.slug" [title]="t.title" />
+          <div class="head-text">
+            <p class="eyebrow">
+              {{ t.category === 'classic' ? 'Classic' : 'Contemporary' }}
+              @if (t.rank && t.rank <= 100) {
+                <span class="rank">· No. {{ t.rank }} on the charts</span>
+              }
+            </p>
+            <h1 class="title">{{ t.title }}</h1>
+            <p class="by">
+              @if (t.poet) {
+                <a class="by-link" [routerLink]="['/poet', t.poet.slug]">
+                  <app-portrait class="by-pic" [poet]="t.poet" />{{ t.author }}
+                </a>
+              } @else {
+                <span>{{ t.author }}</span>
+              }
+              <span class="by-meta">
+                @if (t.year) {
+                  {{ t.year }} ·
+                }
+                {{ t.lines }} lines · {{ duration() }}
+                @if (plays()) {
+                  · read {{ plays() }}×
+                }
+              </span>
+            </p>
+          </div>
+        </header>
+
+        <div class="actions">
+          <button class="play-fab" type="button" (click)="toggle()" [attr.aria-label]="isCurrent() && player.playing() ? 'Pause' : 'Play'">
+            <app-icon [name]="isCurrent() && player.playing() ? 'pause' : 'play'" [fill]="true" />
+          </button>
+          <button class="chip" type="button" (click)="player.cycleSpeed()" title="Reading speed">{{ player.speed() }}×</button>
+          <span class="spacer"></span>
+          <button class="icon-btn" type="button" [class.liked]="liked()" (click)="like()" [attr.aria-pressed]="liked()" aria-label="Like" title="Like (L)">
+            <app-icon name="heart" [fill]="liked()" />
+          </button>
+          <button class="icon-btn" type="button" (click)="share()" aria-label="Share" title="Share"><app-icon name="share" /></button>
+          <button class="icon-btn" type="button" (click)="ui.stageOpen.set(true)" aria-label="Stage mode" title="Stage mode (F)"><app-icon name="expand" /></button>
+        </div>
+
+        @if (isCurrent() && player.engaged()) {
+          <div class="now-bar">
+            <span class="time">{{ elapsed() }}</span>
+            <app-waveform class="wave" [maxBars]="110" />
+            <span class="time">{{ duration() }}</span>
+          </div>
+        }
+
+        <div class="text">
+          @if (detail(); as d) {
+            <app-poem-text
+              [lines]="d.lines"
+              [active]="isCurrent() ? player.activeLine() : -1"
+              [progress]="isCurrent() ? player.lineProgress() : 0"
+              [engaged]="isCurrent() && player.engaged()"
+              [follow]="isCurrent() && player.playing()"
+              (lineClick)="player.seekSource($event)"
+            />
+            <p class="fin" aria-hidden="true">❦</p>
+          } @else if (loadFailed()) {
+            <div class="empty"><h3>The ink ran dry</h3><p>This poem couldn’t be loaded. Check your connection and try again.</p></div>
+          } @else {
+            <div class="loading">
+              @for (w of [72, 88, 64, 80, 0, 76, 90, 58, 70]; track $index) {
+                <span class="skeleton" [style.width.%]="w" [class.gap]="!w"></span>
+              }
+            </div>
+          }
+        </div>
+
+        @if (!player.engaged() || !isCurrent()) {
+          <p class="hint">Press play and the lines light up one by one, at a reading pace. Use the speed button to slow down or speed up.</p>
+        }
+
+        @if (t.poet; as poet) {
+          <section class="about">
+            <a class="poet-card" [routerLink]="['/poet', poet.slug]">
+              <app-portrait class="about-pic" [poet]="poet" size="lg" />
+              <span class="about-text">
+                <span class="eyebrow">About the poet</span>
+                <span class="about-name">{{ poet.name }}</span>
+                <span class="sub">{{ aboutLine() }}</span>
+                @if (bioExcerpt()) {
+                  <span class="about-bio">{{ bioExcerpt() }}</span>
+                }
+                @if (poet.movements.length) {
+                  <span class="chips">
+                    @for (m of poet.movements; track m) {
+                      <span class="chip small">{{ m }}</span>
+                    }
+                  </span>
+                }
+              </span>
+              <app-icon class="about-go" name="arrow" />
+            </a>
+          </section>
+
+          @if (more().length) {
+            <section class="section">
+              <div class="section-head">
+                <h2>More from {{ poet.name }}</h2>
+                @if (more().length > 5) {
+                  <a class="see-all" [routerLink]="['/poet', poet.slug]">See all</a>
+                }
+              </div>
+              <app-track-list [tracks]="more()" [showPoet]="false" [max]="5" />
+            </section>
+          }
+        }
+
+        @if (next(); as n) {
+          <button class="next-up" type="button" (click)="player.next()">
+            <app-cover class="next-cover" [seed]="n.slug" [title]="n.title" />
+            <span class="next-text">
+              <span class="eyebrow">Next up</span>
+              <span class="next-title">{{ n.title }}</span>
+              <span class="sub">{{ n.author }}</span>
+            </span>
+            <app-icon class="next-go" name="next" [fill]="true" />
+          </button>
+        }
+      } @else {
+        <div class="loading head-skel">
+          <span class="skeleton" style="width: 30%; height: 0.8rem"></span>
+          <span class="skeleton" style="width: 70%; height: 3rem"></span>
+          <span class="skeleton" style="width: 40%; height: 1.2rem"></span>
+        </div>
+      }
+    </article>
+
+    <aside class="rail" aria-label="Up next">
+      <div class="rail-inner">
+        <div class="rail-head">
+          <h2>Up next</h2>
+          <button class="icon-btn" type="button" (click)="ui.queueOpen.set(true)" aria-label="Open queue" title="Queue (Q)"><app-icon name="queue" /></button>
+        </div>
+        <ol class="up">
+          @for (u of upNext(); track u.slug; let i = $index) {
+            <li>
+              <button type="button" class="up-item" (click)="player.goTo(player.index() + 1 + i)">
+                <app-cover class="up-cover" [seed]="u.slug" [title]="u.title" />
+                <span class="up-text">
+                  <span class="up-title">{{ u.title }}</span>
+                  <span class="up-poet">{{ u.author }} · {{ readMins(u.seconds) }} min</span>
+                </span>
+                <app-icon class="up-play" name="play" [fill]="true" />
+              </button>
+            </li>
+          } @empty {
+            @for (i of [1, 2, 3, 4, 5, 6]; track i) {
+              <li class="skeleton up-skel"></li>
+            }
+          }
+        </ol>
+      </div>
+    </aside>
+  </div>
+}

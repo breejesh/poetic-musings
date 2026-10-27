@@ -1,0 +1,67 @@
+<nav class="side" aria-label="Main">
+  <a class="brand" routerLink="/" aria-label="Poetic Musings — home">
+    <img src="logo.svg" alt="" width="168" height="89" />
+  </a>
+
+  <button class="search" type="button" (click)="ui.paletteOpen.set(true)">
+    <app-icon name="search" />
+    <span>Search</span>
+    <kbd>{{ isMac ? '⌘' : 'Ctrl' }} K</kbd>
+  </button>
+
+  <div class="scroll">
+    <ul class="group">
+      @for (item of nav.discover; track item.path) {
+        <li>
+          <a [routerLink]="item.path" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: item.exact }">
+            <app-icon [name]="item.icon" />{{ item.label }}
+          </a>
+        </li>
+      }
+    </ul>
+
+    <p class="label">Genres</p>
+    <ul class="group">
+      @for (item of nav.genres; track item.path) {
+        <li>
+          <a [routerLink]="item.path" routerLinkActive="active">
+            <app-icon [name]="item.icon" />{{ item.label }}
+          </a>
+        </li>
+      }
+    </ul>
+
+    <p class="label">Your Library</p>
+    <ul class="group">
+      <li>
+        <a routerLink="/favourites" routerLinkActive="active">
+          <app-icon name="heart" />Liked Poems
+          @if (library.likes().length) {
+            <span class="count">{{ library.likes().length }}</span>
+          }
+        </a>
+      </li>
+      <li>
+        <a routerLink="/history" routerLinkActive="active"><app-icon name="history" />Recently Read</a>
+      </li>
+    </ul>
+
+    <button class="surprise" type="button" (click)="player.surprise()">
+      <span class="dice"><app-icon name="dice" /></span>
+      <span>
+        <b>Surprise me</b>
+        <small>A random poem, played</small>
+      </span>
+    </button>
+  </div>
+
+  <div class="foot">
+    <button class="icon-btn" type="button" (click)="ui.toggleTheme()" [attr.aria-label]="ui.isDark() ? 'Switch to light theme' : 'Switch to dark theme'" title="Theme (T)">
+      <app-icon [name]="ui.isDark() ? 'sun' : 'moon'" />
+    </button>
+    <button class="icon-btn" type="button" (click)="ui.shortcutsOpen.set(true)" aria-label="Keyboard shortcuts" title="Shortcuts (?)">
+      <app-icon name="keyboard" />
+    </button>
+    <span class="credit">Poems via <a href="https://poets.org" target="_blank" rel="noopener">poets.org</a></span>
+  </div>
+</nav>

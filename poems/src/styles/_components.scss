@@ -1,0 +1,345 @@
+// Shared building blocks used across pages.
+
+.page {
+  padding: clamp(20px, 3.2vw, 40px) var(--gutter) 64px;
+  max-width: 1480px;
+  margin: 0 auto;
+  animation: page-in 0.5s var(--ease) both;
+}
+
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+.eyebrow {
+  font: 600 0.72rem/1 var(--font-ui);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 450;
+  font-size: clamp(2.4rem, 6vw, 5.2rem);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  font-variation-settings: 'opsz' 144;
+}
+
+.section {
+  margin-top: clamp(36px, 5vw, 56px);
+}
+
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.1rem;
+
+  h2 {
+    font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+    font-weight: 500;
+  }
+
+  .see-all {
+    font: 600 0.78rem var(--font-ui);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    text-decoration: none;
+    white-space: nowrap;
+
+    &:hover {
+      color: var(--ink);
+    }
+  }
+}
+
+.sub {
+  font: 400 0.92rem/1.45 var(--font-ui);
+  color: var(--ink-3);
+}
+
+// Horizontally scrolling shelf of cards.
+.shelf {
+  --card-w: clamp(150px, 17vw, 210px);
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: var(--card-w);
+  gap: clamp(14px, 1.6vw, 22px);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--gutter);
+  padding: 4px var(--gutter) 12px;
+  margin: 0 calc(var(--gutter) * -1);
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  > * {
+    scroll-snap-align: start;
+  }
+
+  &.poets {
+    --card-w: clamp(130px, 13vw, 170px);
+  }
+}
+
+// Buttons
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  height: 2.75rem;
+  padding: 0 1.25rem;
+  border-radius: 99px;
+  border: 1px solid transparent;
+  background: var(--ink);
+  color: var(--bg);
+  font: 600 0.9rem/1 var(--font-ui);
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.15s var(--ease), background 0.2s, color 0.2s, border-color 0.2s;
+  white-space: nowrap;
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+  &:active {
+    transform: scale(0.97);
+  }
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  &.ghost {
+    background: transparent;
+    color: var(--ink);
+    border-color: var(--line);
+
+    &:hover {
+      border-color: var(--ink-3);
+    }
+  }
+
+  &.soft {
+    background: var(--hover);
+    color: var(--ink);
+  }
+
+  app-icon {
+    font-size: 1rem;
+  }
+}
+
+// Large round play button.
+.play-fab {
+  all: unset;
+  box-sizing: border-box;
+  width: 3.75rem;
+  height: 3.75rem;
+  border-radius: 50%;
+  display: inline-grid;
+  place-items: center;
+  background: var(--ink);
+  color: var(--bg);
+  font-size: 1.35rem;
+  cursor: pointer;
+  box-shadow: var(--shadow-1);
+  transition: transform 0.2s var(--ease), box-shadow 0.2s;
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: var(--shadow-2);
+  }
+  &:active {
+    transform: scale(0.96);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 3px;
+  }
+  &.light {
+    background: var(--paper-white);
+    color: #111;
+  }
+}
+
+.icon-btn {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  color: inherit;
+  cursor: pointer;
+  font-size: 1.05rem;
+  opacity: 0.88;
+  transition: opacity 0.15s, background 0.15s, transform 0.15s, color 0.15s;
+  position: relative;
+
+  &:hover {
+    opacity: 1;
+    background: var(--hover);
+  }
+  &:active {
+    transform: scale(0.9);
+  }
+  &:focus-visible {
+    opacity: 1;
+    outline: 2px solid var(--focus);
+    outline-offset: 1px;
+  }
+  &.on {
+    opacity: 1;
+  }
+  // Active-state dot, as in music apps.
+  &.on.dot::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    width: 4px;
+    height: 4px;
+    margin-left: -2px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+  &.liked {
+    color: var(--heart);
+    opacity: 1;
+  }
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  height: 2rem;
+  padding: 0 0.85rem;
+  border-radius: 99px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink-2);
+  font: 500 0.82rem/1 var(--font-ui);
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+
+  &:hover {
+    border-color: var(--ink-3);
+    color: var(--ink);
+  }
+  &.active {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--bg);
+  }
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.stat-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.9rem;
+  font: 500 0.86rem var(--font-ui);
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+
+  > span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  > span + span::before {
+    content: '';
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: currentColor;
+    margin-right: 0.5rem;
+    opacity: 0.6;
+  }
+}
+
+.skeleton {
+  border-radius: 10px;
+  background: linear-gradient(90deg, var(--hover) 0%, color-mix(in oklab, var(--ink) 9%, transparent) 50%, var(--hover) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s linear infinite;
+}
+
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.empty {
+  display: grid;
+  place-items: center;
+  gap: 0.75rem;
+  text-align: center;
+  padding: 4rem 1rem;
+  color: var(--ink-3);
+
+  app-icon {
+    font-size: 2.2rem;
+    opacity: 0.6;
+  }
+  h3 {
+    color: var(--ink);
+    font-size: 1.4rem;
+  }
+}
+
+.field {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  padding: 0.8rem 1rem;
+  color: var(--ink);
+  transition: border-color 0.15s, box-shadow 0.15s;
+
+  &:focus {
+    outline: none;
+    border-color: var(--ink-3);
+    box-shadow: 0 0 0 4px var(--hover);
+  }
+  &::placeholder {
+    color: var(--ink-3);
+  }
+}
+
+kbd {
+  font: 600 0.7rem/1 var(--font-ui);
+  padding: 0.25rem 0.4rem;
+  border-radius: 5px;
+  border: 1px solid var(--line);
+  border-bottom-width: 2px;
+  color: var(--ink-3);
+  background: var(--bg-elev);
+}

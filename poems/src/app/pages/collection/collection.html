@@ -1,0 +1,59 @@
+@if (notFound()) {
+  <div class="page empty">
+    <app-icon name="compass" />
+    <h3>Nothing filed under that name</h3>
+    <a class="btn" routerLink="/browse">Browse instead</a>
+  </div>
+} @else if (view(); as v) {
+  <div class="page">
+    <header class="head">
+      <div class="cover" aria-hidden="true">
+        <div class="faces">
+          @for (p of v.poets.slice(0, 4); track p.slug) {
+            <app-portrait class="face" [poet]="p" size="lg" />
+          }
+        </div>
+        <span class="cover-label">{{ v.label }}</span>
+      </div>
+      <div class="head-text">
+        <p class="eyebrow">{{ v.eyebrow }}</p>
+        <h1 class="display">{{ v.title }}</h1>
+        <p class="blurb">{{ v.blurb }}</p>
+        <div class="stat-row">
+          <span>{{ v.tracks.length.toLocaleString() }} poems</span>
+          <span>{{ time() }}</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="actions">
+      <button class="play-fab" type="button" (click)="play()" aria-label="Play all"><app-icon name="play" [fill]="true" /></button>
+      <button class="btn ghost" type="button" (click)="play(true)"><app-icon name="shuffle" /> Shuffle</button>
+    </div>
+
+    @if (v.poets.length > 1) {
+      <section class="section">
+        <div class="section-head"><h2>Featuring</h2></div>
+        <div class="shelf poets">
+          @for (p of v.poets; track p.slug) {
+            <app-poet-card [poet]="p" />
+          }
+        </div>
+      </section>
+    }
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Poems</h2>
+        <div class="chips">
+          @for (s of sorts; track s.key) {
+            <button class="chip" type="button" [class.active]="sort() === s.key" (click)="sort.set(s.key)">{{ s.label }}</button>
+          }
+        </div>
+      </div>
+      <app-track-list [tracks]="sorted()" [numbering]="sort() === 'popular' ? v.numbering : 'index'" />
+    </section>
+  </div>
+} @else {
+  <div class="page"><div class="skeleton" style="height: 260px; border-radius: 24px"></div></div>
+}

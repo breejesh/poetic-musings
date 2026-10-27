@@ -1,0 +1,81 @@
+:host {
+  display: block;
+}
+
+.poem {
+  font-family: var(--font-serif);
+  font-size: clamp(1.18rem, 1.1vw + 0.85rem, 1.42rem);
+  line-height: 1.55;
+  color: var(--ink);
+  font-feature-settings: 'kern', 'liga', 'onum';
+  hanging-punctuation: first;
+}
+
+.line {
+  width: fit-content;
+  max-width: 100%;
+  margin: 0;
+  padding: 0.12em 0 0.12em calc(var(--indent, 0) * 0.55em + 1.6em);
+  text-indent: -1.6em; // wrapped lines hang under the first word
+  border-radius: 6px;
+  transition: box-shadow 0.3s ease, background-color 0.3s ease;
+  overflow-wrap: anywhere;
+}
+
+.stanza {
+  height: 1.05em;
+}
+
+// Lines are clickable once a poem has been started (click to jump there).
+.engaged .line {
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--hover);
+  }
+}
+
+// The current line — identical text rendering whether playing or paused (no recolouring or
+// clipped-text effects, which make the type look thin). A marker sits beside the line and its
+// background fills left-to-right as the line is read.
+.engaged .line.active {
+  // Pull the highlight out to the left so the marker sits beside the text, not on it.
+  margin-left: -0.7rem;
+  padding-left: calc(var(--indent, 0) * 0.55em + 1.6em + 0.7rem);
+  padding-right: 0.5rem;
+  box-shadow: inset 3px 0 0 var(--ink);
+  background: linear-gradient(
+    90deg,
+    var(--progress-fill) calc(var(--p, 0) * 100%),
+    var(--hover) calc(var(--p, 0) * 100%)
+  );
+}
+
+.poem {
+  --progress-fill: color-mix(in oklab, var(--ink) 11%, transparent);
+}
+
+// Full-screen stage variant: bigger, bolder, on dark.
+.stage {
+  --bg: var(--stage);
+  --ink: var(--stage-ink);
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.4vw + 0.7rem, 2.6rem);
+  line-height: 1.28;
+  font-weight: 500;
+  letter-spacing: -0.012em;
+  color: var(--stage-ink);
+  font-variation-settings: 'opsz' 72;
+  --hover: rgb(255 255 255 / 0.07);
+
+  .line {
+    padding-top: 0.18em;
+    padding-bottom: 0.18em;
+  }
+  .stanza {
+    height: 0.9em;
+  }
+  --progress-fill: rgb(255 255 255 / 0.13);
+}
+
+

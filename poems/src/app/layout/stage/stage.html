@@ -1,0 +1,84 @@
+@if (player.track(); as t) {
+  <div class="backdrop" [style.background-image]="bg()"></div>
+  <div class="veil"></div>
+
+  <header class="head">
+    <button #closeBtn class="icon-btn" type="button" (click)="close()" aria-label="Close full-screen player" title="Close (Esc)">
+      <app-icon name="chevron-down" />
+    </button>
+    <div class="source">
+      <span class="eyebrow">Now playing</span>
+      <span>Reading at {{ player.speed() }}×</span>
+    </div>
+    <button class="icon-btn" type="button" (click)="ui.queueOpen.set(true)" aria-label="Up next"><app-icon name="queue" /></button>
+  </header>
+
+  <div class="layout">
+    <aside class="deck">
+      <div class="record" [class.spinning]="player.playing()">
+        <span class="grooves"></span>
+        <app-portrait class="label" [poet]="t.poet" [name]="t.author" size="lg" />
+      </div>
+
+      <div class="info">
+        <div class="titles">
+          <a class="title" [routerLink]="['/poem', t.slug]" (click)="close()">{{ t.title }}</a>
+          @if (t.poet) {
+            <a class="poet" [routerLink]="['/poet', t.poet.slug]" (click)="close()">{{ t.author }}</a>
+          } @else {
+            <span class="poet">{{ t.author }}</span>
+          }
+        </div>
+        <button class="icon-btn" type="button" [class.liked]="liked()" (click)="like()" [attr.aria-label]="liked() ? 'Unlike' : 'Like'">
+          <app-icon name="heart" [fill]="liked()" />
+        </button>
+      </div>
+
+      <div class="scrub">
+        <app-waveform [maxBars]="64" [showTip]="false" />
+        <div class="times">
+          <span>{{ elapsed() }}</span><span>{{ total() }}</span>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button class="icon-btn dot" type="button" [class.on]="player.shuffle()" (click)="player.toggleShuffle()" aria-label="Shuffle">
+          <app-icon name="shuffle" />
+        </button>
+        <button class="icon-btn big" type="button" (click)="player.prev()" aria-label="Previous"><app-icon name="prev" [fill]="true" /></button>
+        <button class="play-fab light" type="button" (click)="player.toggle()" [attr.aria-label]="player.playing() ? 'Pause' : 'Play'">
+          <app-icon [name]="player.playing() ? 'pause' : 'play'" [fill]="true" />
+        </button>
+        <button class="icon-btn big" type="button" (click)="player.next()" aria-label="Next"><app-icon name="next" [fill]="true" /></button>
+        <button class="icon-btn dot" type="button" [class.on]="player.repeat() !== 'off'" (click)="player.cycleRepeat()" aria-label="Repeat">
+          <app-icon [name]="player.repeat() === 'one' ? 'repeat-one' : 'repeat'" />
+        </button>
+      </div>
+
+      <div class="modes">
+        <button class="mode" type="button" (click)="player.cycleSpeed()"><app-icon name="gauge" /> {{ player.speed() }}×</button>
+      </div>
+    </aside>
+
+    <section class="lyrics" tabindex="-1">
+      @if (player.detail(); as d) {
+        <app-poem-text
+          [lines]="d.lines"
+          [active]="player.activeLine()"
+          [progress]="player.lineProgress()"
+          [engaged]="player.engaged()"
+          [follow]="player.playing()"
+          variant="stage"
+          (lineClick)="player.seekSource($event)"
+        />
+        <p class="credit">— {{ t.author }}{{ t.year ? ', ' + t.year : '' }}</p>
+      } @else {
+        <div class="loading">
+          @for (w of [80, 64, 72, 50, 68]; track $index) {
+            <span class="skeleton" [style.width.%]="w"></span>
+          }
+        </div>
+      }
+    </section>
+  </div>
+}

@@ -1,0 +1,159 @@
+<div class="page">
+  <header class="greet">
+    <p class="eyebrow">{{ today.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' }) }}</p>
+    <h1>{{ greeting }}<span class="dot">.</span></h1>
+  </header>
+
+  <!-- Poem of the day -->
+  @if (potd(); as t) {
+    <section class="hero" aria-labelledby="potd-title">
+      <div class="hero-art">
+        <app-cover class="hero-cover" [seed]="t.slug" [title]="t.title" />
+        <app-portrait class="hero-portrait" [poet]="t.poet" [name]="t.author" size="lg" />
+      </div>
+      <div class="hero-body">
+        <p class="eyebrow light"><app-icon name="sparkles" /> Poem of the day</p>
+        <h2 id="potd-title" class="hero-title">
+          <a [routerLink]="['/poem', t.slug]">{{ t.title }}</a>
+        </h2>
+        <p class="hero-by">
+          by
+          @if (t.poet) {
+            <a [routerLink]="['/poet', t.poet.slug]">{{ t.author }}</a>
+          } @else {
+            {{ t.author }}
+          }
+          @if (t.year) {
+            <span class="muted">· {{ t.year }}</span>
+          }
+        </p>
+        <blockquote class="excerpt">
+          @for (l of potdLines(); track $index) {
+            <p [innerHTML]="l[1]"></p>
+          } @empty {
+            @for (w of [86, 72, 80, 60]; track $index) {
+              <span class="skeleton" [style.width.%]="w"></span>
+            }
+          }
+        </blockquote>
+        <div class="hero-actions">
+          <button class="play-fab light" type="button" (click)="playPotd()" [attr.aria-label]="'Play ' + t.title">
+            <app-icon [name]="player.track()?.slug === t.slug && player.playing() ? 'pause' : 'play'" [fill]="true" />
+          </button>
+          <a class="btn hero-read" [routerLink]="['/poem', t.slug]">Read the poem</a>
+          <button class="icon-btn" type="button" [class.liked]="library.isLiked(t.slug)" (click)="likePotd()" aria-label="Like">
+            <app-icon name="heart" [fill]="library.isLiked(t.slug)" />
+          </button>
+          <span class="hero-dur"><app-icon name="clock" /> {{ potdDuration() }}</span>
+        </div>
+      </div>
+    </section>
+  } @else {
+    <div class="hero skeleton"></div>
+  }
+
+  @if (recent().length) {
+    <section class="section">
+      <div class="section-head">
+        <h2>Jump back in</h2>
+        <a class="see-all" routerLink="/history">History</a>
+      </div>
+      <div class="shelf">
+        @for (t of recent(); track t.slug) {
+          <app-poem-card [track]="t" [queue]="recent()" />
+        }
+      </div>
+    </section>
+  }
+
+  <section class="section charts-wrap">
+    <div class="charts">
+      <div class="section-head">
+        <h2>Top Charts</h2>
+        <a class="see-all" routerLink="/charts">See top 100</a>
+      </div>
+      @if (catalog.ready()) {
+        <app-track-list class="two-col" [tracks]="top()" numbering="rank" [showYear]="false" [max]="10" />
+      } @else {
+        @for (i of [1, 2, 3, 4, 5]; track i) {
+          <div class="skeleton row-skel"></div>
+        }
+      }
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <h2>Poets on heavy rotation</h2>
+      <a class="see-all" routerLink="/poets">All poets</a>
+    </div>
+    <div class="shelf poets">
+      @for (p of poets(); track p.slug) {
+        <app-poet-card [poet]="p" />
+      }
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <h2>Through the centuries</h2>
+      <a class="see-all" routerLink="/browse">Browse</a>
+    </div>
+    <div class="eras">
+      @for (e of eras; track e.slug) {
+        <a class="era" [routerLink]="['/era', e.slug]">
+          <span class="era-label">{{ e.label }}</span>
+          <span class="era-title">{{ e.title }}</span>
+          <span class="era-count">{{ eraCounts().get(e.slug) ?? 0 }} poems</span>
+        </a>
+      }
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <h2>Quick reads <span class="sub">· under a minute</span></h2>
+    </div>
+    <div class="shelf">
+      @for (t of quick(); track t.slug) {
+        <app-poem-card [track]="t" [queue]="quick()" />
+      }
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <h2>Movements</h2>
+      <a class="see-all" routerLink="/browse">All movements</a>
+    </div>
+    <div class="movements">
+      @for (m of movements(); track m.slug) {
+        <div class="movement">
+          <a class="movement-link" [routerLink]="['/movement', m.slug]">
+            <span class="faces">
+              @for (p of m.poets.slice(0, 3); track p.slug) {
+                <app-portrait class="face" [poet]="p" />
+              }
+            </span>
+            <span class="m-name">{{ m.name }}</span>
+            <span class="m-sub">{{ m.poets.length }} poets</span>
+          </a>
+          <button class="icon-btn m-play" type="button" (click)="playMovement(m.slug)" [attr.aria-label]="'Shuffle ' + m.name">
+            <app-icon name="shuffle" />
+          </button>
+        </div>
+      }
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <h2>Long plays <span class="sub">· epics to sink into</span></h2>
+    </div>
+    <div class="shelf">
+      @for (t of epics(); track t.slug) {
+        <app-poem-card [track]="t" [queue]="epics()" />
+      }
+    </div>
+  </section>
+</div>

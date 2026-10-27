@@ -1,0 +1,46 @@
+<div class="page">
+  <header class="head">
+    <div class="cover" [class.history]="tab() === 'history'" aria-hidden="true">
+      <app-icon [name]="tab() === 'liked' ? 'heart' : 'history'" [fill]="tab() === 'liked'" />
+    </div>
+    <div class="head-text">
+      <p class="eyebrow">Your library</p>
+      <h1 class="display">{{ tab() === 'liked' ? 'Liked Poems' : 'Recently Read' }}</h1>
+      <div class="stat-row">
+        <span>{{ tracks().length }} {{ tracks().length === 1 ? 'poem' : 'poems' }}</span>
+        @if (tracks().length) {
+          <span>{{ time() }}</span>
+        }
+        <span>Saved on this device</span>
+      </div>
+    </div>
+  </header>
+
+  <nav class="tabs" aria-label="Library">
+    <a class="chip" routerLink="/favourites" [class.active]="tab() === 'liked'"><app-icon name="heart" /> Liked · {{ liked().length }}</a>
+    <a class="chip" routerLink="/history" [class.active]="tab() === 'history'"><app-icon name="history" /> History · {{ history().length }}</a>
+  </nav>
+
+  @if (tracks().length) {
+    <div class="actions">
+      <button class="play-fab" type="button" (click)="play()" aria-label="Play all"><app-icon name="play" [fill]="true" /></button>
+      <button class="btn ghost" type="button" (click)="play(true)"><app-icon name="shuffle" /> Shuffle</button>
+      @if (tab() === 'history') {
+        <button class="btn soft clear" type="button" (click)="library.clearHistory()"><app-icon name="trash" /> Clear history</button>
+      }
+    </div>
+    <app-track-list [tracks]="tracks()" />
+  } @else {
+    <div class="empty">
+      <app-icon [name]="tab() === 'liked' ? 'heart' : 'history'" />
+      @if (tab() === 'liked') {
+        <h3>Poems you love will live here</h3>
+        <p>Tap the heart on any poem — or press <kbd>L</kbd> while one is playing.</p>
+      } @else {
+        <h3>Nothing read yet</h3>
+        <p>Every poem you open is remembered here.</p>
+      }
+      <a class="btn" routerLink="/">Find something to read</a>
+    </div>
+  }
+</div>

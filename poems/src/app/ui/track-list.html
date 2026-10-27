@@ -1,0 +1,55 @@
+<ol class="tracks" [class.no-num]="numbering() === 'none'" [class.no-year]="!showYear()">
+  @for (t of visible(); track t.slug; let i = $index) {
+    <li
+      class="row"
+      [class.current]="isCurrent(t)"
+      (click)="play(t, $event)"
+      (keydown.enter)="play(t)"
+      tabindex="0"
+      [attr.aria-label]="'Play ' + t.title + ' by ' + t.author"
+    >
+      @if (numbering() !== 'none') {
+        <span class="num">
+          @if (isCurrent(t) && player.engaged()) {
+            <app-eq class="eq" [playing]="player.playing()" />
+          } @else {
+            <span class="n">{{ numbering() === 'rank' ? t.rank : i + 1 }}</span>
+          }
+          <app-icon class="hover-play" [name]="isCurrent(t) && player.playing() ? 'pause' : 'play'" [fill]="true" />
+        </span>
+      }
+      <span class="main">
+        <app-cover class="thumb" [seed]="t.slug" [title]="t.title" />
+        <span class="text">
+          <a class="title" [routerLink]="['/poem', t.slug]">{{ t.title }}</a>
+          @if (showPoet()) {
+            @if (t.poet) {
+              <a class="poet" [routerLink]="['/poet', t.poet.slug]">{{ t.author }}</a>
+            } @else {
+              <span class="poet">{{ t.author }}</span>
+            }
+          }
+        </span>
+      </span>
+      @if (showYear()) {
+        <span class="year">{{ t.year ?? '—' }}</span>
+      }
+      <button
+        class="heart"
+        type="button"
+        [class.on]="library.isLiked(t.slug)"
+        (click)="like(t)"
+        [attr.aria-pressed]="library.isLiked(t.slug)"
+        [attr.aria-label]="library.isLiked(t.slug) ? 'Unlike' : 'Like'"
+      >
+        <app-icon name="heart" [fill]="library.isLiked(t.slug)" />
+      </button>
+      <span class="dur">{{ duration(t.seconds) }}</span>
+    </li>
+  }
+</ol>
+@if (hasMore()) {
+  <div class="sentinel" (appInView)="more()">
+    <button class="btn ghost" type="button" (click)="more()">Show more</button>
+  </div>
+}

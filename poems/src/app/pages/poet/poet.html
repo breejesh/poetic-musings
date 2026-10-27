@@ -1,0 +1,100 @@
+@if (notFound()) {
+  <div class="page empty">
+    <app-icon name="users" />
+    <h3>No poet by that name</h3>
+    <a class="btn" routerLink="/poets">Browse poets</a>
+  </div>
+} @else if (poet(); as p) {
+  <header class="hero">
+    <div class="hero-bg">
+      <app-portrait class="bg-pic" [poet]="p" size="lg" />
+    </div>
+    <div class="hero-inner">
+      <app-portrait class="pic" [poet]="p" size="lg" />
+      <div class="hero-text">
+        <p class="eyebrow">Poet</p>
+        <h1 class="display name">{{ p.name }}</h1>
+        @if (bio()?.description; as d) {
+          <p class="tagline">{{ d }}</p>
+        }
+        <div class="stat-row">
+          @if (life()) {
+            <span>{{ life() }}</span>
+          }
+          @if (p.state) {
+            <span><app-icon name="pin" /> {{ p.state }}</span>
+          }
+          <span>{{ p.poems.length }} {{ p.poems.length === 1 ? 'poem' : 'poems' }}</span>
+          <span>{{ totalTime() }}</span>
+        </div>
+        @if (movementLinks().length) {
+          <div class="chips">
+            @for (m of movementLinks(); track m.slug) {
+              <a class="chip" [routerLink]="['/movement', m.slug]">{{ m.name }}</a>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  </header>
+
+  <div class="page">
+    <div class="actions">
+      <button class="play-fab" type="button" (click)="play()" [attr.aria-label]="'Play ' + p.name">
+        <app-icon [name]="isPlayingHere() ? 'pause' : 'play'" [fill]="true" />
+      </button>
+      <button class="btn ghost" type="button" (click)="play(true)"><app-icon name="shuffle" /> Shuffle</button>
+      <a class="btn soft" [href]="'https://poets.org/poet/' + p.slug" target="_blank" rel="noopener">More on poets.org <app-icon name="arrow" /></a>
+    </div>
+
+    <section class="section about">
+      <div class="section-head"><h2>About</h2></div>
+      @if (bio(); as b) {
+        <div class="bio">
+          @for (para of b.bio; track $index) {
+            <p>{{ para }}</p>
+          }
+        </div>
+        <p class="credit">
+          From <a [href]="b.source" target="_blank" rel="noopener">Wikipedia</a>, available under
+          <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>.
+        </p>
+      } @else if (bioLoading()) {
+        <div class="bio-skel">
+          @for (w of [96, 90, 94, 60]; track $index) {
+            <span class="skeleton" [style.width.%]="w"></span>
+          }
+        </div>
+      } @else {
+        <div class="bio"><p>{{ fallbackBio() }}</p></div>
+      }
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>{{ p.poems.length > 5 ? 'Poems' : 'Popular' }}</h2>
+        @if (p.poems.length > 3) {
+          <div class="chips" aria-label="Sort">
+            @for (s of sorts; track s.key) {
+              <button class="chip" type="button" [class.active]="sort() === s.key" (click)="sort.set(s.key)">{{ s.label }}</button>
+            }
+          </div>
+        }
+      </div>
+      <app-track-list [tracks]="sorted()" [showPoet]="false" />
+    </section>
+
+    @if (related().length) {
+      <section class="section">
+        <div class="section-head"><h2>Readers also love</h2></div>
+        <div class="shelf poets">
+          @for (r of related(); track r.slug) {
+            <app-poet-card [poet]="r" />
+          }
+        </div>
+      </section>
+    }
+  </div>
+} @else {
+  <div class="page"><div class="skeleton" style="height: 320px; border-radius: 28px"></div></div>
+}

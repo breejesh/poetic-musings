@@ -1,19 +1,31 @@
 <!doctype html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
-  <title>Poems</title>
+  <title>Poetic Musings</title>
   <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Poetic Musings — twelve thousand poems, played like music. Press play and let the lines light up as you read.">
+  <meta name="theme-color" content="#f4f1ea" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0f0e0d" media="(prefers-color-scheme: dark)">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Abyssinica+SIL&family=Bree+Serif&family=Arima+Madurai:wght@100;400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..700;1,400..600&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Inter:wght@400..650&display=swap" rel="stylesheet">
+  <link rel="preload" href="data/catalog.json" as="fetch" crossorigin="anonymous">
+  <script>
+    // Apply the saved theme before first paint to avoid a flash.
+    try {
+      var t = JSON.parse(localStorage.getItem('pm.theme') || '"system"');
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  </script>
 </head>
 <body>
-  <app-root></app-root>
+  <app-root>
+    <div class="boot">
+      <img src="logo.svg" alt="Poetic Musings" width="180">
+    </div>
+  </app-root>
 </body>
-
 </html>

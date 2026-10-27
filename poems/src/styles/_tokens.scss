@@ -1,0 +1,73 @@
+// Paper & ink. A monochrome, editorial palette with a single warm accent for hearts.
+@mixin light {
+  --bg: #f4f1ea;
+  --bg-elev: #fbf9f4;
+  --surface: #ffffff;
+  --surface-2: #ebe7de;
+  --surface-3: #dfd9cd;
+  --ink: #161513;
+  --ink-2: #3f3b35;
+  --ink-3: #66615a;
+  --line: rgb(22 21 19 / 0.14);
+  --hover: rgb(22 21 19 / 0.055);
+  --accent-ink: #161513;
+  --focus: #6b5cff;
+  --heart: #e5245e;
+  --logo-filter: none;
+  --shadow-1: 0 1px 2px rgb(30 25 15 / 0.06), 0 6px 18px rgb(30 25 15 / 0.07);
+  --shadow-2: 0 2px 4px rgb(30 25 15 / 0.08), 0 18px 40px rgb(30 25 15 / 0.14);
+  --grain-opacity: 0.35;
+  color-scheme: light;
+}
+
+@mixin dark {
+  --bg: #0f0e0d;
+  --bg-elev: #161514;
+  --surface: #1b1a18;
+  --surface-2: #131211;
+  --surface-3: #2a2825;
+  --ink: #f1ece2;
+  --ink-2: #cfc8bb;
+  --ink-3: #a29c91;
+  --line: rgb(241 236 226 / 0.14);
+  --hover: rgb(241 236 226 / 0.06);
+  --accent-ink: #f1ece2;
+  --focus: #9d93ff;
+  --heart: #ff4d7e;
+  --logo-filter: invert(1);
+  --shadow-1: 0 1px 2px rgb(0 0 0 / 0.4), 0 6px 18px rgb(0 0 0 / 0.3);
+  --shadow-2: 0 2px 4px rgb(0 0 0 / 0.4), 0 18px 40px rgb(0 0 0 / 0.5);
+  --grain-opacity: 0.18;
+  color-scheme: dark;
+}
+
+:root {
+  @include light;
+
+  --font-display: 'Fraunces', 'Iowan Old Style', Georgia, serif;
+  --font-serif: 'EB Garamond', 'Garamond', 'Iowan Old Style', Georgia, serif;
+  --font-ui: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  // The player bar is always "stage black", regardless of theme.
+  --stage: #121110;
+  --stage-ink: #f3eee5;
+  --stage-ink-2: #b9b3a8;
+  --paper-white: #f6f2ea;
+
+  --sidebar-w: 264px;
+  --player-h: 88px;
+  --mobile-nav-h: 64px;
+  --gutter: clamp(16px, 4vw, 48px);
+  --radius: 14px;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    @include dark;
+  }
+}
+
+:root[data-theme='dark'] {
+  @include dark;
+}

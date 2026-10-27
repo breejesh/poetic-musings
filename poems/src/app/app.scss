@@ -1,0 +1,88 @@
+:host {
+  display: block;
+}
+
+.skip {
+  position: fixed;
+  top: -100px;
+  left: 16px;
+  z-index: 200;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  background: var(--ink);
+  color: var(--bg);
+  text-decoration: none;
+
+  &:focus {
+    top: 16px;
+  }
+}
+
+// App shell: only the content area scrolls. The sidebar and the player are fixed parts of the
+// grid, so the player spans the full width and the scrollbar never runs alongside it.
+.shell {
+  height: 100dvh;
+  display: grid;
+  grid-template-columns: var(--sidebar-w) minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) auto;
+  grid-template-areas:
+    'side main'
+    'player player';
+  // Height of the visible content area — used by sticky full-height panels inside pages.
+  --main-h: 100dvh;
+
+  &.has-player {
+    --main-h: calc(100dvh - var(--player-h));
+  }
+}
+
+.sidebar {
+  grid-area: side;
+  min-height: 0;
+  view-transition-name: sidebar;
+}
+
+.content {
+  grid-area: main;
+  display: block;
+  min-height: 0;
+  overflow-x: clip;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scroll-padding: 24px 0;
+  padding-bottom: 24px;
+}
+
+.player {
+  grid-area: player;
+  position: relative;
+  z-index: 30;
+  view-transition-name: player;
+}
+
+.mobile-nav {
+  display: none;
+}
+
+@media (max-width: 1023px) {
+  .shell {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr) auto auto;
+    grid-template-areas:
+      'top'
+      'main'
+      'player'
+      'tabs';
+    --main-h: calc(100dvh - 61px - var(--mobile-nav-h));
+
+    &.has-player {
+      --main-h: calc(100dvh - 61px - var(--mobile-nav-h) - 72px);
+    }
+  }
+  .sidebar {
+    display: none;
+  }
+  .mobile-nav {
+    display: contents;
+  }
+}

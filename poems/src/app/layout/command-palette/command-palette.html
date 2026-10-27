@@ -1,0 +1,60 @@
+<div class="scrim" (click)="close()"></div>
+<div class="palette" role="dialog" aria-modal="true" aria-label="Search">
+  <label class="bar">
+    <app-icon name="search" />
+    <input
+      #input
+      type="search"
+      placeholder="Search 12,000 poems, poets, movements…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="true"
+      aria-controls="palette-list"
+      [attr.aria-activedescendant]="items()[cursor()] ? 'opt-' + cursor() : null"
+      [value]="query()"
+      (input)="onInput($any($event.target).value)"
+      (keydown)="key($event)"
+    />
+    <kbd>Esc</kbd>
+  </label>
+  <ul class="list" id="palette-list" role="listbox">
+    @for (item of items(); track item.id; let i = $index) {
+      <li
+        class="opt"
+        role="option"
+        [id]="'opt-' + i"
+        [class.on]="i === cursor()"
+        [attr.aria-selected]="i === cursor()"
+        (mousemove)="cursor.set(i)"
+        (click)="item.run()"
+      >
+        @if (item.kind === 'poem' && item.track) {
+          <app-cover class="pic" [seed]="item.track.slug" [title]="item.track.title" />
+        } @else if (item.kind === 'poet') {
+          <app-portrait class="pic round" [poet]="item.poet" [name]="item.title" />
+        } @else {
+          <span class="glyph"><app-icon [name]="item.icon ?? 'arrow'" /></span>
+        }
+        <span class="text">
+          <b>{{ item.title }}</b>
+          <small>{{ item.sub }}</small>
+        </span>
+        @if (item.track) {
+          <button class="icon-btn play" type="button" (click)="playItem($event, item)" aria-label="Play">
+            <app-icon name="play" [fill]="true" />
+          </button>
+        } @else {
+          <app-icon class="go" name="arrow" />
+        }
+      </li>
+    } @empty {
+      <li class="none">No poems found. Try a first line, a title, or a poet.</li>
+    }
+  </ul>
+  <footer>
+    <span><kbd>↑</kbd><kbd>↓</kbd> navigate</span>
+    <span><kbd>↵</kbd> open</span>
+    <span><kbd>⇧</kbd><kbd>↵</kbd> play</span>
+  </footer>
+</div>
