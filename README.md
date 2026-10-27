@@ -5,12 +5,12 @@
   </picture>
 </p>
 
-<h3 align="center">Twelve thousand poems, played like music.</h3>
+<h3 align="center">World's most beautiful poetry website.</h3>
 
 <p align="center">
   A poetry library dressed as a music player. Press play and a poem's lines light up one by one at a
   reading pace; poems queue, shuffle and repeat like tracks, poets have “artist” pages, and every poem
-  gets its own album cover.
+  gets its own album cover. 12000 poems.
 </p>
 
 <p align="center">
