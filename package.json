@@ -1,0 +1,14 @@
+{
+  "name": "poetic-musings-workspace",
+  "private": true,
+  "description": "Poetic Musings — twelve thousand poems, played like music.",
+  "scripts": {
+    "setup": "npm --prefix poems install",
+    "start": "npm --prefix poems start",
+    "build": "npm --prefix poems run build",
+    "test": "npm --prefix poems test -- --watch=false",
+    "data": "npm --prefix poems run data",
+    "bios": "npm --prefix poems run bios",
+    "deploy": "npm --prefix poems run deploy"
+  }
+}
